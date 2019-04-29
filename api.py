@@ -13,13 +13,17 @@ __email__ = "info@unmix.io"
 from flask import Flask
 from flask_restful import Api, Resource, reqparse
 
-
 from controllers.dummy import Dummy
+from context import Context
+
+
+def initialize(api):
+    api.add_resource(Dummy, '/dummy/<string:name>')
+    Context.initialize()
+
 
 if __name__ == "__main__":
     app = Flask(__name__)
-    api = Api(app)
-
-    api.add_resource(Dummy, '/dummy/<string:name>')
-
+    api = Api()
+    initialize(api)
     app.run()

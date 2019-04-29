@@ -1,1 +1,2 @@
 flask-restful
+git+https://github.com/unmix-io/unmix-net/#egg=unmix
