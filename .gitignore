@@ -208,3 +208,5 @@ temp/
 /envs/
 /weights/
 /runs/
+/results/
+/resources/

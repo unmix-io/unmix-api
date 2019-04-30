@@ -12,7 +12,7 @@ __email__ = "info@unmix.io"
 from flask_restful import Resource
 
 
-class Dummy(Resource):
+class DummyController(Resource):
 
     def get(self, name):
         return "Hello %s, I am Get" % name, 200
