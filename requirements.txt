@@ -1,3 +1,13 @@
-flask-restful
 git+https://github.com/unmix-io/unmix-net/#egg=unmix
+flask-restful
+keras
+tensorflow
+numpy
+psutil
+commentjson
+gitpython
+colorama
+progressbar2
+mir_eval
 pytube
+librosa

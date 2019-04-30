@@ -23,19 +23,21 @@ class YouTubeController(Resource):
 
     name = "YoutTube"
 
-    def get(self):
+    def post(self):
         try:
-            link = request.args.get('link')
             response = PredictionResponse(YouTubeController.name)
+
+            link = request.args.get('link')
             prediction = YoutTubePrediction(
                 Context.engine, sample_rate=Configuration.get("collection.sample_rate"))
             path, name, size = prediction.run(link, response.directory)
             prediction.save(name, path)
+
             response.result = {
                 "size": size,
                 "vocals": "/result/%s/vocals" % response.identifier,
                 "instrumental": "/result/%s/instrumental" % response.identifier
             }
-            return response.__dict__, 200
+            return response.serialize(), 200
         except Exception as e:
             return str(e), 500

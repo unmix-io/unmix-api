@@ -29,3 +29,6 @@ class Context(object):
         Context.output_directory = "./results/"
         if not os.path.exists(Context.output_directory):
             os.makedirs(Context.output_directory)
+        Context.temp_directory = "./temp/"
+        if not os.path.exists(Context.temp_directory):
+            os.makedirs(Context.temp_directory)

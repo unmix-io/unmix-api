@@ -36,6 +36,5 @@ class PredictionResponse(object):
             Context.output_directory, self.identifier)
         os.makedirs(self.directory)
 
-    def json(self):
-        return json.dumps(self, default=lambda o: o.__dict__,
-                          sort_keys=True, indent=4)
+    def serialize(self):
+        return self.__dict__

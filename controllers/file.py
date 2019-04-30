@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+# coding: utf8
+
+"""
+Controller to receive and predict a file.
+"""
+
+__author__ = 'David Flury, Andreas Kaufmann, Raphael Müller'
+__email__ = "info@unmix.io"
+
+
+from flask_restful import Resource, reqparse
+from flask import request
+import werkzeug
+import numpy as np
+import os
+
+from unmix.source.configuration import Configuration
+from unmix.source.prediction.fileprediction import FilePrediction
+
+from context import Context
+from models.prediction_response import PredictionResponse
+
+
+class FileController(Resource):
+
+    name = "File"
+
+    def post(self):
+        try:
+            response = PredictionResponse(FileController.name)
+            parse = reqparse.RequestParser()
+            parse.add_argument("file", type=werkzeug.datastructures.FileStorage, location="files")
+
+            argument = parse.parse_args()["file"]
+            name = argument.filename
+            file = os.path.join(response.directory, name)
+            argument.save(file)
+
+            prediction = FilePrediction(
+                Context.engine, sample_rate=Configuration.get("collection.sample_rate"))
+            
+            prediction.run(file)   
+            prediction.save(name, response.directory)
+
+            response.result = {
+                "size": os.path.getsize(file),
+                "vocals": "/result/%s/vocals" % response.identifier,
+                "instrumental": "/result/%s/instrumental" % response.identifier
+            }
+            return response.serialize(), 200
+        except Exception as e:
+            return str(e), 500
