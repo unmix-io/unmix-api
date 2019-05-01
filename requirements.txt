@@ -1,4 +1,4 @@
--e https://github.com/unmix-io/unmix-net/tree/development/#egg=unmix
+-e git+https://github.com/unmix-io/unmix-net@development#egg=unmix
 flask-restful
 keras
 tensorflow
