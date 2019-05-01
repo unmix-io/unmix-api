@@ -34,4 +34,4 @@ if __name__ == "__main__":
     register_controllers(api)
     cors = CORS(app, resources={"*": {"origins": "*"}})
     Context.initialize()
-    app.run()
+    app.run('0.0.0.0')
