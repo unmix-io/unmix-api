@@ -27,11 +27,14 @@ def register_controllers(api):
     api.add_resource(FileController, '/predict/file') # Expect "link" GET parameter
     api.add_resource(ResultController, '/result/<string:identifier>/<string:type>')
 
-
-if __name__ == "__main__":
+def app():
     app = Flask(__name__)
     api = Api(app)
     register_controllers(api)
-    cors = CORS(app, resources={"*": {"origins": "*"}})
+    CORS(app, resources={"*": {"origins": "*"}})
     Context.initialize()
     app.run('0.0.0.0')
+
+
+if __name__ == "__main__":
+    app()
