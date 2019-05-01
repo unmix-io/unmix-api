@@ -34,9 +34,11 @@ class YouTubeController(Resource):
             prediction.save(name, path)
 
             response.result = {
+                "name": name,
                 "size": size,
                 "vocals": "/result/%s/vocals" % response.identifier,
-                "instrumental": "/result/%s/instrumental" % response.identifier
+                "instrumental": "/result/%s/instrumental" % response.identifier,
+                "response": "/result/%s/response" % response.identifier
             }
             return response.serialize(), 200
         except Exception as e:

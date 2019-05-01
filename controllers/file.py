@@ -44,9 +44,11 @@ class FileController(Resource):
             prediction.save(name, response.directory)
 
             response.result = {
+                "name": name,
                 "size": os.path.getsize(file),
                 "vocals": "/result/%s/vocals" % response.identifier,
-                "instrumental": "/result/%s/instrumental" % response.identifier
+                "instrumental": "/result/%s/instrumental" % response.identifier,
+                "response": "/result/%s/response" % response.identifier
             }
             return response.serialize(), 200
         except Exception as e:

@@ -37,4 +37,7 @@ class PredictionResponse(object):
         os.makedirs(self.directory)
 
     def serialize(self):
-        return self.__dict__
+        content = self.__dict__
+        with open(os.path.join(self.directory, 'result.json'), 'w') as file:  
+            json.dump(content, file)
+        return content
