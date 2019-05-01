@@ -12,3 +12,4 @@ mir_eval
 pytube
 librosa
 gunicorn
+flask_cors
