@@ -21,10 +21,10 @@ class Context(object):
 
     @staticmethod
     def initialize():
-        Configuration.initialize('./resources/configuration.jsonc', disable_merge=True)
+        Configuration.initialize(os.environ['UNMIX_API_CONFIGURATION'], disable_merge=True)
         Logger.initialize()
         Context.engine = Engine()
-        Context.engine.load_weights('./resources/model.h5')
+        Context.engine.load_weights(os.environ['UNMIX_API_WEIGHTS'])
 
         Context.output_directory = "./results/"
         if not os.path.exists(Context.output_directory):

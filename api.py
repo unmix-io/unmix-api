@@ -13,6 +13,7 @@ __email__ = "info@unmix.io"
 from flask import Flask
 from flask_restful import Api, Resource, reqparse
 from flask_cors import CORS
+import os
 
 from controllers.dummy import DummyController
 from controllers.file import FileController
@@ -33,7 +34,7 @@ def app():
     register_controllers(api)
     CORS(app, resources={"*": {"origins": "*"}})
     Context.initialize()
-    app.run('0.0.0.0')
+    app.run('0.0.0.0', port=os.environ['UNMIX_API_PORT'])
 
 
 if __name__ == "__main__":
