@@ -13,6 +13,7 @@ import datetime
 import json
 import uuid
 import os
+from flask import request
 
 from unmix.source.configuration import Configuration
 
@@ -25,6 +26,7 @@ class PredictionResponse(object):
         self.identifier = str(uuid.uuid4())
         self.controller = controller
         self.time = datetime.datetime.now().strftime('%Y%m%d-%H%M%S')
+        self.host = request.host_url
         self.configuration = {
             "name": Configuration.get('environment.name'),
             "transformation": Configuration.get('environment.name'),

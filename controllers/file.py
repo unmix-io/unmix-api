@@ -46,9 +46,9 @@ class FileController(Resource):
             response.result = {
                 "name": name,
                 "size": os.path.getsize(file),
-                "vocals": "/result/%s/vocals" % response.identifier,
-                "instrumental": "/result/%s/instrumental" % response.identifier,
-                "response": "/result/%s/response" % response.identifier
+                "vocals": os.path.join(response.host, "result/%s/vocals" % response.identifier),
+                "instrumental": os.path.join(response.host, "result/%s/instrumental" % response.identifier),
+                "response": os.path.join(response.host, "result/%s/response" % response.identifier)
             }
             return response.serialize(), 200
         except Exception as e:

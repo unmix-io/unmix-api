@@ -11,6 +11,7 @@ __email__ = "info@unmix.io"
 
 from flask_restful import Resource
 from flask import request
+import os
 
 from unmix.source.configuration import Configuration
 from unmix.source.prediction.youtubeprediction import YoutTubePrediction
@@ -36,9 +37,9 @@ class YouTubeController(Resource):
             response.result = {
                 "name": name,
                 "size": size,
-                "vocals": "/result/%s/vocals" % response.identifier,
-                "instrumental": "/result/%s/instrumental" % response.identifier,
-                "response": "/result/%s/response" % response.identifier
+                "vocals": os.path.join(response.host, "result/%s/vocals" % response.identifier),
+                "instrumental": os.path.join(response.host, "result/%s/instrumental" % response.identifier),
+                "response": os.path.join(response.host, "result/%s/response" % response.identifier)
             }
             return response.serialize(), 200
         except Exception as e:
