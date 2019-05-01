@@ -1,4 +1,4 @@
--e git+https://github.com/unmix-io/unmix-net/#egg=unmix
+-e https://github.com/unmix-io/unmix-net/tree/development/#egg=unmix
 flask-restful
 keras
 tensorflow
@@ -13,3 +13,10 @@ pytube
 librosa
 gunicorn
 flask_cors
+scipy
+pyyaml
+h5py
+matplotlib
+pandas
+scikit-learn
+scikit-image
