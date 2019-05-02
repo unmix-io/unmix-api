@@ -34,8 +34,8 @@ class ResultController(Resource):
             return self.__send_track(identifier, directory, type)
         except Exception as e:
             return str(e), 500
-    
-    def __send_result(self, identifier, directory):        
+
+    def __send_result(self, identifier, directory):
         with open(os.path.join(directory, 'result.json')) as file:
             data = json.load(file)
         return data, 200
@@ -50,4 +50,5 @@ class ResultController(Resource):
         return send_file(file,
                          mimetype='audio/wav',
                          as_attachment=True,
+                         conditional=True,
                          attachment_filename=os.path.basename(file))
