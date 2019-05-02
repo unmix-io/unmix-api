@@ -24,7 +24,10 @@ class Context(object):
         Configuration.initialize(os.environ['UNMIX_API_CONFIGURATION'], disable_merge=True)
         Logger.initialize()
         Context.engine = Engine()
-        Context.engine.load_weights(os.environ['UNMIX_API_WEIGHTS'])
+        try:
+            Context.engine.load(os.environ['UNMIX_API_WEIGHTS'])
+        except:
+            Context.engine.load_weights(os.environ['UNMIX_API_WEIGHTS'])
 
         Context.output_directory = "./results/"
         if not os.path.exists(Context.output_directory):
