@@ -48,7 +48,7 @@ class ResultController(Resource):
         if not file:
             return "%s file in results %s not found." % (track, identifier), 404
         return send_file(file,
-                         mimetype='audio/wav',
+                         mimetype='audio/mp3',
                          as_attachment=True,
                          conditional=True,
                          attachment_filename=os.path.basename(file))

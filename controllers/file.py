@@ -41,7 +41,7 @@ class FileController(Resource):
                 Context.engine, sample_rate=Configuration.get("collection.sample_rate"))
             
             prediction.run(file)   
-            prediction.save(name, response.directory)
+            prediction.save(name, response.directory, extension='mp3')
 
             response.result = {
                 "name": name,

@@ -32,7 +32,7 @@ class YouTubeController(Resource):
             prediction = YoutTubePrediction(
                 Context.engine, sample_rate=Configuration.get("collection.sample_rate"))
             path, name, size = prediction.run(link, response.directory)
-            prediction.save(name, path)
+            prediction.save(name, path, extension='mp3')
 
             response.result = {
                 "name": name,
