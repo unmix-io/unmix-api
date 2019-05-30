@@ -24,8 +24,8 @@ from context import Context
 
 def register_controllers(api):
     api.add_resource(DummyController, '/dummy/<string:name>')
-    api.add_resource(YouTubeController, '/predict/youtube') # Expect "link" GET parameter
-    api.add_resource(FileController, '/predict/file') # Expect "link" GET parameter
+    api.add_resource(YouTubeController, '/predict/youtube')
+    api.add_resource(FileController, '/predict/file')
     api.add_resource(ResultController, '/result/<string:identifier>/<string:type>')
 
 def app():
