@@ -20,3 +20,4 @@ matplotlib
 pandas
 scikit-learn
 scikit-image
+pyopenssl
