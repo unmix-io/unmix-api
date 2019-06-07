@@ -14,6 +14,7 @@ from flask import send_file
 import glob
 import json
 import os
+import traceback
 
 from unmix.source.configuration import Configuration
 from unmix.source.prediction.youtubeprediction import YoutTubePrediction
@@ -35,6 +36,7 @@ class ResultController(Resource):
             return self.__send_track(identifier, directory, type)
         except Exception as e:
             Logger.error("Error while processing %s request: %s" % (ResultController.name, str(e)))
+            traceback.print_exc()
             return str(e), 500
 
     def __send_result(self, identifier, directory):
