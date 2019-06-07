@@ -34,8 +34,7 @@ def app():
     register_controllers(api)
     CORS(app, resources={"*": {"origins": "*"}})
     Context.initialize()
-    ssl_context = None
-    if os.environ['UNMIX_API_TLS_CERTIFICATE']:
+    if 'UNMIX_API_TLS_CERTIFICATE' in os.environ and os.environ['UNMIX_API_TLS_CERTIFICATE']:
         app.run('0.0.0.0', port=os.environ['UNMIX_API_PORT'], ssl_context=(os.environ['UNMIX_API_TLS_CERTIFICATE'], os.environ['UNMIX_API_TLS_PRIVATEKEY']))
     else:
         app.run('0.0.0.0', port=os.environ['UNMIX_API_PORT'])
