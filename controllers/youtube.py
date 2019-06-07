@@ -13,6 +13,7 @@ from flask_restful import Resource
 from flask import request
 import os
 import pytube
+import traceback
 
 from unmix.source.configuration import Configuration
 from unmix.source.prediction.youtubeprediction import YoutTubePrediction
@@ -53,4 +54,5 @@ class YouTubeController(Resource):
             return response.serialize(), 200
         except Exception as e:
             Logger.error("Error while processing %s request: %s" % (YouTubeController.name, str(e)))
+            Logger.warn(traceback.print_stack())
             return str(e), 500

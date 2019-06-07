@@ -14,6 +14,7 @@ from flask import request
 import werkzeug
 import numpy as np
 import os
+import traceback
 
 from unmix.source.configuration import Configuration
 from unmix.source.prediction.fileprediction import FilePrediction
@@ -54,4 +55,5 @@ class FileController(Resource):
             return response.serialize(), 200
         except Exception as e:
             Logger.error("Error while processing %s request: %s" % (FileController.name, str(e)))
+            Logger.warn(traceback.print_stack())
             return str(e), 500
