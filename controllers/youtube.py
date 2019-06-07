@@ -12,6 +12,7 @@ __email__ = "info@unmix.io"
 from flask_restful import Resource
 from flask import request
 import os
+import pytube
 
 from unmix.source.configuration import Configuration
 from unmix.source.prediction.youtubeprediction import YoutTubePrediction
@@ -24,18 +25,25 @@ class YouTubeController(Resource):
 
     name = "YoutTube"
 
+    thumbnail_pattern = "https://img.youtube.com/vi/%s/hqdefault.jpg"
+
     def post(self):
         try:
             response = PredictionResponse(YouTubeController.name)
 
             link = request.args.get('link')
+            id = pytube.extract.video_id(link)
+            yt = pytube.YouTube(link)
+
             prediction = YoutTubePrediction(
                 Context.engine, sample_rate=Configuration.get("collection.sample_rate"))
             path, name, size = prediction.run(link, response.directory)
             prediction.save(name, path, extension='mp3')
 
             response.result = {
-                "name": name,
+                "name": yt.title if yt.title else name,
+                "thumbnail": YouTubeController.thumbnail_pattern % id,
+                "video_id": id,
                 "size": size,
                 "vocals": os.path.join(response.host, "result/%s/vocals" % response.identifier),
                 "instrumental": os.path.join(response.host, "result/%s/instrumental" % response.identifier),

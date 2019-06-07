@@ -14,13 +14,15 @@ import os
 
 from unmix.source.engine import Engine
 from unmix.source.configuration import Configuration
-from unmix.source.logging.logger import Logger
+from unmix.source.logging.logger import Logger        
+from unmix.source.helpers import envvars
 
 
 class Context(object):
 
     @staticmethod
     def initialize():
+        envvars.initialize()
         Configuration.initialize(os.environ['UNMIX_API_CONFIGURATION'], disable_merge=True)
         Logger.initialize()
         Context.engine = Engine()
