@@ -55,5 +55,5 @@ class FileController(Resource):
             return response.serialize(), 200
         except Exception as e:
             Logger.error("Error while processing %s request: %s" % (FileController.name, str(e)))
-            Logger.warn(traceback.print_stack())
+            Logger.warn(str(traceback.format_stack()))
             return str(e), 500
