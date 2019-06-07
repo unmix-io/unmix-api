@@ -1,4 +1,6 @@
 -e git+https://github.com/unmix-io/unmix-net@development#egg=unmix
+flask
+flask_cors
 flask-restful
 keras
 tensorflow
