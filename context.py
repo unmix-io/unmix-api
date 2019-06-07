@@ -14,7 +14,7 @@ import os
 
 from unmix.source.engine import Engine
 from unmix.source.configuration import Configuration
-from unmix.source.logging.logger import Logger        
+from unmix.source.logging.logger import Logger
 from unmix.source.helpers import envvars
 
 

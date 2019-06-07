@@ -16,6 +16,7 @@ import pytube
 
 from unmix.source.configuration import Configuration
 from unmix.source.prediction.youtubeprediction import YoutTubePrediction
+from unmix.source.logging.logger import Logger
 
 from context import Context
 from models.prediction_response import PredictionResponse
@@ -51,4 +52,5 @@ class YouTubeController(Resource):
             }
             return response.serialize(), 200
         except Exception as e:
+            Logger.error("Error while processing %s request: %s" % (YouTubeController.name, str(e)))
             return str(e), 500

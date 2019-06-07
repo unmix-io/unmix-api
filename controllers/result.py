@@ -17,6 +17,7 @@ import os
 
 from unmix.source.configuration import Configuration
 from unmix.source.prediction.youtubeprediction import YoutTubePrediction
+from unmix.source.logging.logger import Logger
 
 from context import Context
 
@@ -33,6 +34,7 @@ class ResultController(Resource):
                 return self.__send_result(identifier, directory)
             return self.__send_track(identifier, directory, type)
         except Exception as e:
+            Logger.error("Error while processing %s request: %s" % (ResultController.name, str(e)))
             return str(e), 500
 
     def __send_result(self, identifier, directory):

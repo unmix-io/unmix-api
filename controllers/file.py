@@ -17,6 +17,7 @@ import os
 
 from unmix.source.configuration import Configuration
 from unmix.source.prediction.fileprediction import FilePrediction
+from unmix.source.logging.logger import Logger
 
 from context import Context
 from models.prediction_response import PredictionResponse
@@ -52,4 +53,5 @@ class FileController(Resource):
             }
             return response.serialize(), 200
         except Exception as e:
+            Logger.error("Error while processing %s request: %s" % (FileController.name, str(e)))
             return str(e), 500
