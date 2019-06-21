@@ -55,22 +55,25 @@ RUN apt-get install -y libcupti-dev python-pip python-dev python3-dev python3-pi
 RUN pip install tensorflow-gpu==1.12 numpy scipy 'matplotlib<3.0' pandas scikit-learn scikit-image
 RUN pip3 install tensorflow-gpu==1.12 numpy scipy matplotlib pandas scikit-learn scikit-image
 
-RUN pip install scipy pyyaml h5py matplotlib pandas scikit-learn scikit-image keras==2.2.4 librosa commentjson psutil gitpython colorama progressbar2 mir_eval flask flask_cors flask-restful pyopenssl gunicorn pytube && \
-    pip3 install scipy pyyaml h5py matplotlib pandas scikit-learn scikit-image keras==2.2.4 librosa commentjson psutil gitpython colorama progressbar2 mir_eval flask flask_cors flask-restful pyopenssl gunicorn pytube
+RUN pip install scipy pyyaml h5py matplotlib pandas scikit-learn scikit-image keras==2.2.4 librosa commentjson psutil gitpython colorama progressbar2 mir_eval pytube && \
+    pip3 install scipy pyyaml h5py matplotlib pandas scikit-learn scikit-image keras==2.2.4 librosa commentjson psutil gitpython colorama progressbar2 mir_eval pytube
+
+RUN pip install flask flask_cors flask-restful pyopenssl gunicorn && \
+    pip3 install flask flask_cors flask-restful pyopenssl gunicorn
 
 RUN pip install -e git+https://github.com/unmix-io/unmix-net@development#egg=unmix && \
     pip3 install -e git+https://github.com/unmix-io/unmix-net@development#egg=unmix
 
 # To publish this Dockerfile, run (in the same directory as this file):
 # docker login --username=yourhubusername --email=youremail@provider.com
-# docker build -t unmix .
+# docker build -t unmix-api .
 # docker images # list all available images
-# docker run unmix # see if unmix image works
+# docker run unmix-api # see if unmix image works
 
 # Note the id in the docker images command, then run
-# docker tag [id] unmix/unmix:latest
-# docker push unmix/unmix
+# docker tag [id] unmix/unmix-api:latest
+# docker push unmix/unmix-api
 
 # Then build the .simg image using:
-# singularity build unmix.simg Singularity
-# or directly without the Singularity file: singularity build unmix.simg docker://unmix/unmix:latest
+# singularity build unmix-api.simg Singularity
+# or directly without the Singularity file: singularity build unmix-api.simg docker://unmix/unmix-api:latest
