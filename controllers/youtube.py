@@ -13,6 +13,7 @@ from flask_restful import Resource
 from flask import request
 import os
 import pytube
+import youtube_dl
 import traceback
 
 from unmix.source.configuration import Configuration
@@ -34,17 +35,19 @@ class YouTubeController(Resource):
             response = PredictionResponse(YouTubeController.name)
 
             link = request.args.get('link')
-            id = pytube.extract.video_id(link)
-            yt = pytube.YouTube(link)
 
             prediction = YoutTubePrediction(
                 Context.engine, sample_rate=Configuration.get("collection.sample_rate"))
             path, name, size = prediction.run(link, response.directory)
             prediction.save(name, path, extension='mp3')
 
+            valid, id, title, thumbnail = self.__metadata(link)
+            if not valid:
+                id, title, thumbnail = self.__metadata_alternative(link)
+
             response.result = {
-                "name": yt.title if yt.title else name,
-                "thumbnail": YouTubeController.thumbnail_pattern % id,
+                "name": title if title else name,
+                "thumbnail": thumbnail,
                 "video_id": id,
                 "size": size,
                 "vocals": os.path.join(response.host, "result/%s/vocals" % response.identifier),
@@ -53,6 +56,31 @@ class YouTubeController(Resource):
             }
             return response.serialize(), 200
         except Exception as e:
-            Logger.error("Error while processing %s request: %s" % (YouTubeController.name, str(e)))
+            Logger.error("Error while processing %s request: %s" %
+                         (YouTubeController.name, str(e)))
             traceback.print_exc()
             return str(e), 500
+
+    def __metadata(self, link):
+        try:
+            ydl_opts = {
+                'format': 'bestaudio',
+                'restrictfilenames': True,
+                'forcefilename': True
+            }
+            with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+                info = ydl.extract_info(link, download=False)
+                return True, info["id"], info["title"], info["thumbnail"]
+        except:
+            return False, "", "", ""
+
+    def __metadata_alternative(self, link):
+        """
+        Alternative library to download YouTube files.
+        """
+        try:
+            id = pytube.extract.video_id(link)
+            yt = pytube.YouTube(link)
+            return True, id, yt.title, YouTubeController.thumbnail_pattern % id
+        except:
+            return False, "", "", ""
